@@ -1,0 +1,77 @@
+.dashboardHeader {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-family: "Geist Mono", "Courier New", monospace;
+  font-size: 13px; /* Meta text size from specifications */
+  line-height: 1.5;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border); /* Thin divider line at the bottom */
+  padding: 2rem 5rem;
+}
+
+/* Left and right blocks stack items vertically */
+.headerLeft,
+.headerRight {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Tight vertical layout scale */
+}
+
+/* Aligns the right column labels to the right */
+.headerRight {
+  align-items: flex-end;
+}
+
+/* The data rows inside the blocks */
+.headerRow {
+  display: flex;
+  align-items: center;
+}
+
+/* Fixed labels use muted color and a consistent alignment width */
+.headerLabel {
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.headerLeft .headerLabel {
+  width: 80px; /* Forces colons to line up perfectly on the left column */
+}
+
+.headerRight .headerLabel {
+  width: 85px; /* Forces colons to line up perfectly on the right column */
+}
+
+/* Separation colon element styling */
+.headerColon {
+  color: var(--dim);
+  margin-right: 12px;
+}
+
+/* Default color for values is the system warm off-white */
+.headerValue {
+  color: var(--fg);
+}
+
+/* Custom modifier tokens for system-wide status coloring */
+.headerValue.statusSuccess {
+  color: var(--accent); /* Green live/granted alert */
+}
+
+.headerValue.statusCode {
+  color: var(--orange); /* Orange system status alert */
+}
+
+/* =====================================================================
+   8. RESPONSIVE REHAVIOR (HEADER REFLOW)
+   ===================================================================== */
+@media (max-width: 760px) {
+  .dashboardHeader {
+    flex-direction: column;
+    row-gap: 12px;
+  }
+  .headerRight {
+    align-items: flex-start; /* Left-align everything on smaller mobile viewports */
+  }
+}
