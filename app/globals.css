@@ -1,26 +1,338 @@
-@import "tailwindcss";
-
+/* =====================================================================
+   2. COLOR PALETTE & ROLES
+   ===================================================================== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0f1210; /* Page background — dark green-tinted, not black */
+  --surface: #161a15; /* Elevated surface — image placeholders, widget fills */
+  --fg: #d4d8d0; /* Primary text — warm off-white, never pure white */
+  --dim: #5a6058; /* Muted text — labels, metadata, secondary info */
+  --accent: #4ade80; /* Green — command prompts, LIVE status, active nav, links */
+  --accent-border: #2a5c38; /* Green border — badges, open buttons, callout left-rule */
+  --orange: #e8854a; /* Orange — WIP status, warnings, seeking-role indicators */
+  --err: #d16060; /* Error states only — not used decoratively */
+  --border: #2a2e28; /* All borders and dividers — slightly warm dark */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =====================================================================
+   1. VISUAL THEME, ATMOSPHERE & GLOBAL RESET
+   ===================================================================== */
+/* Enforce absolute removal of rounded corners and shadows across the engine */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-shadow: none !important;
+  border-radius: 0px !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: "Geist Mono", "Courier New", monospace;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: left;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+
+  /* Anti-aliasing: intentionally pixelated, no sub-pixel smoothing */
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+}
+
+/* =====================================================================
+   6. DEPTH, ELEVATION & ALWAYS-ON OVERLAY EFFECTS
+   ===================================================================== */
+/* CRT Scanlines Layer */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: repeating-linear-gradient(
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.15) 3px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  opacity: 0.05;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Corner Vignette Layer */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(15, 18, 16, 0.4) 100%
+  );
+  z-index: 99;
+  pointer-events: none;
+}
+
+/* Base App Layout Container */
+#app,
+.app-container {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 24px;
+}
+
+/* =====================================================================
+   3. TYPOGRAPHY RULES
+   ===================================================================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th {
+  font-family: "Geist Mono", "Courier New", monospace;
+  font-weight: 500;
+}
+
+.text-meta {
+  font-size: 13px;
+  color: var(--dim);
+}
+
+.text-label-sm {
+  font-size: 11px;
+}
+
+.text-label-xs {
+  font-size: 9px;
+}
+
+.ascii-header {
+  font-size: 10.5px;
+  line-height: 1.12;
+  white-space: pre;
+}
+
+/* =====================================================================
+   4. COMPONENT STYLINGS
+   ===================================================================== */
+
+/* // section name layout marker */
+.section-title {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+  margin-bottom: 24px;
+}
+
+/* Navigation Menu System */
+.nav-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 16px;
+  list-style: none;
+  position: absolute;
+  bottom: 10;
+  padding: 0 5rem;
+  background-color: var(--bg);
+  width: 100%;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--dim);
+  text-decoration: none;
+  cursor: pointer;
+  width: 100px;
+
+  /* 3. High-Density Micro-Scanline Texture Pattern */
+  /* This creates alternating 1px dark/light horizontal stripes exactly like the image */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(15, 18, 16, 0.12) 0px,
+    rgba(15, 18, 16, 0.12) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+
+  &:hover {
+    color: var(--fg);
+  }
+}
+
+.nav-item.active {
+  /* 1. Base Colors according to design specification */
+  color: var(--bg);
+  background-color: var(--accent);
+
+  /* 2. Positioning & Layout constraints */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Room for the '>' prefix character if typed */
+  padding: 4px 12px;
+}
+
+/* File Table Work Index Grid Framework */
+.file-table-row {
+  display: grid;
+  grid-template-columns: 210px 80px 120px 1fr;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding: 6px 0;
+}
+
+.file-name {
+  color: var(--accent);
+}
+
+.file-meta {
+  color: var(--dim);
+}
+
+/* Action Trigger Interface */
+.open-button {
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  padding: 2px 10px;
+  font-size: 12px;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.open-button:hover {
+  background-color: rgba(74, 222, 128, 0.08);
+}
+
+/* Case Study Header Separator Grid */
+.cs-meta-row {
+  border: none;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+  display: flex;
+  gap: 24px;
+}
+
+/* Quote Insight Anchor Element */
+.callout-block {
+  border: none;
+  border-left: 2px solid var(--accent-border);
+  padding: 8px 14px;
+  background-color: rgba(74, 222, 128, 0.03);
+  font-size: 13px;
+}
+
+/* Dynamic Asset Target Blocks */
+.image-slot {
+  border: 1px dashed var(--border);
+  background-color: var(--surface);
+  color: var(--dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+img.image-real {
+  border: 1px solid var(--border);
+  max-width: 100%;
+  height: auto;
+}
+
+/* Terminal Framework Component */
+.terminal-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.terminal-prompt::before {
+  content: "$ ";
+  color: var(--accent);
+}
+
+.terminal-input {
+  border: none !important;
+  background: transparent !important;
+  color: var(--fg);
+  font-family: "Geist Mono", "Courier New", monospace;
+  font-size: 14px;
+  outline: none;
+  caret-color: var(--accent);
+  flex-grow: 1;
+}
+
+/* System Infrastructure State Elements */
+.badge-live,
+.badge-shipped {
+  color: var(--accent);
+  font-weight: 500;
+}
+.badge-wip,
+.badge-open-to-work {
+  color: var(--orange);
+  font-weight: 500;
+}
+.badge-archived {
+  color: var(--dim);
+  font-weight: 400;
+}
+
+/* =====================================================================
+   8. RESPONSIVE BEHAVIOR
+   ===================================================================== */
+@media (max-width: 760px) {
+  .file-table-row {
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+    padding: 12px 0;
+  }
+
+  .nav-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+    background-color: var(--bg);
+  }
+
+  .nav-item {
+    min-height: 44px; /* Touch target verification compliance */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cs-meta-row {
+    flex-direction: column;
+    row-gap: 8px;
+    gap: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+  }
+  #app,
+  .app-container {
+    padding: 16px;
+  }
 }
