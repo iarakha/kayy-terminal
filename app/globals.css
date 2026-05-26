@@ -11,6 +11,21 @@
   --orange: #e8854a; /* Orange — WIP status, warnings, seeking-role indicators */
   --err: #d16060; /* Error states only — not used decoratively */
   --border: #2a2e28; /* All borders and dividers — slightly warm dark */
+
+  .text-accent {
+    color: var(--accent);
+  }
+
+  .text-cmd {
+    span:first-child {
+      color: var(--accent);
+      margin-right: 8px;
+    }
+
+    span:last-child {
+      color: var(--fg);
+    }
+  }
 }
 
 /* =====================================================================
@@ -35,7 +50,7 @@ body {
   text-align: left;
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
 
   /* Anti-aliasing: intentionally pixelated, no sub-pixel smoothing */
   -webkit-font-smoothing: none;
@@ -86,6 +101,104 @@ body::after {
   margin-left: auto;
   margin-right: auto;
   padding: 20px 24px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  height: calc(100vh - 140px);
+  background-color: var(--bg);
+  padding-bottom: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--bg);
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-desc {
+  width: 75%;
+}
+
+.metadata-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Strict grid scale gutters */ /* */
+  margin-bottom: 24px; /* Vertical rhythm gap scale */ /* */
+  margin-top: 16px;
+}
+
+.metadata-row {
+  display: flex;
+  align-items: flex-start;
+  font-family: "Geist Mono", "Courier New", monospace; /* */
+  font-size: 13px; /* Meta typography layer scale */ /* */
+  line-height: 1.6; /* */
+}
+
+.metadata-label {
+  color: var(--dim); /* Muted status typography colors */ /* */
+  width: 110px; /* Fixed alignment block to align right values perfectly */
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* 3. Bordered Live Alert Box Component */
+.live-callout-box {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--accent-border); /* Green border spec */ /* */
+  padding: 8px 14px; /* Callout box restraint scale padding */ /* */
+  background-color: rgba(
+    74,
+    222,
+    128,
+    0.03
+  ); /* Faint green tint specification layer */ /* */
+  font-family: "Geist Mono", "Courier New", monospace; /* */
+  font-size: 13px; /* */
+  color: var(--fg); /* */
+  margin-bottom: 24px; /* */
+  gap: 10px;
+}
+
+/* Glowing Indicator Matrix */
+.live-indicator-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent); /* Core green */ /* */
+  box-shadow: 0 0 8px var(--accent) !important; /* Controlled radial glow override allowed for CRT aesthetics */
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* 4. Bottom System Tooltip Utilities */
+.system-tip {
+  font-family: "Geist Mono", "Courier New", monospace; /* */
+  font-size: 12px; /* Small label range layer scale */ /* */
+  color: var(--dim); /* Muted labels text role */ /* */
+  line-height: 1.6; /* */
+}
+
+.system-tip-highlight {
+  color: var(--fg); /* Highlight text values dynamically */
+}
+
+/* Responsive collapse safety triggers */
+@media (max-width: 760px) {
+  .metadata-row {
+    flex-direction: column;
+    row-gap: 2px;
+  }
+  .metadata-label {
+    width: auto;
+  }
 }
 
 /* =====================================================================
@@ -115,10 +228,14 @@ th {
   font-size: 9px;
 }
 
-.ascii-header {
-  font-size: 10.5px;
-  line-height: 1.12;
+/* ASCII Layout Manager */
+.ascii-name {
+  overflow-x: auto;
   white-space: pre;
+  line-height: 1.1; /* Keeps the isometric rows perfectly connected */
+  letter-spacing: -0.02em;
+  font-weight: bold;
+  user-select: none;
 }
 
 /* =====================================================================
@@ -140,15 +257,8 @@ th {
 /* Navigation Menu System */
 .nav-container {
   display: flex;
-  align-items: center;
-  flex-direction: row;
-  gap: 16px;
+  gap: 5px;
   list-style: none;
-  position: absolute;
-  bottom: 10;
-  padding: 0 5rem;
-  background-color: var(--bg);
-  width: 100%;
 }
 
 .nav-item {
@@ -159,7 +269,7 @@ th {
   color: var(--dim);
   text-decoration: none;
   cursor: pointer;
-  width: 100px;
+  padding: 2px 8px;
 
   /* 3. High-Density Micro-Scanline Texture Pattern */
   /* This creates alternating 1px dark/light horizontal stripes exactly like the image */
@@ -185,8 +295,7 @@ th {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px; /* Room for the '>' prefix character if typed */
-  padding: 4px 12px;
+  gap: 8px;
 }
 
 /* File Table Work Index Grid Framework */
@@ -258,9 +367,23 @@ img.image-real {
 }
 
 /* Terminal Framework Component */
+.terminal-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 0px;
+  margin-bottom: 10px;
+}
+
 .terminal-wrapper {
   display: flex;
   align-items: center;
+}
+
+.terminal-prompt {
+  color: var(--accent);
 }
 
 .terminal-prompt::before {
@@ -277,6 +400,7 @@ img.image-real {
   outline: none;
   caret-color: var(--accent);
   flex-grow: 1;
+  margin-left: 10px;
 }
 
 /* System Infrastructure State Elements */

@@ -7,7 +7,6 @@
   line-height: 1.5;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border); /* Thin divider line at the bottom */
-  padding: 2rem 5rem;
 }
 
 /* Left and right blocks stack items vertically */
@@ -55,6 +54,16 @@
 }
 
 /* Custom modifier tokens for system-wide status coloring */
+
+/* ASCII header styling */
+.ascii-header {
+  font-family: "Geist Mono", "Courier New", monospace;
+  white-space: pre;
+  overflow: hidden; /* prevent scrolling */
+  width: 100%;
+  line-height: 1.2;
+}
+
 .headerValue.statusSuccess {
   color: var(--accent); /* Green live/granted alert */
 }
