@@ -1,4 +1,10 @@
+"use client";
+
+import { useState } from "react";
+
 export default function Hoby() {
+  const [expanded, setExpanded] = useState<string | null>(null);
+
   return (
     <main className="content-wrapper">
       <div className="text-cmd">
@@ -28,12 +34,23 @@ export default function Hoby() {
           return (
             <div key={file.name}>
               <div className="file-row">
-                <span className="file-name">{file.name}</span>
+                <span
+                  className="file-name"
+                  onClick={() => {
+                    setExpanded(expanded === file.name ? null : file.name);
+                  }}
+                >
+                  {file.name}
+                </span>
                 <span className="file-size">{file.size}</span>
                 <span className="file-date">{file.modified}</span>
                 <span className="dimtext">{file.description}</span>
               </div>
-              <div className="file-meta">
+              <div
+                className={
+                  expanded === file.name ? "file-meta open" : "file-meta"
+                }
+              >
                 <div className="fm-row">
                   <span className="fm-key">DESC</span>
                   <span>{file.detail?.desc}</span>
