@@ -74,7 +74,7 @@ export default function Hoby() {
 
 const HOBBY = [
   {
-    name: "Reading.md",
+    name: "README.md",
     size: "116.9kb",
     modified: "2026-05",
     description: "Rajin membaca jadi pintar, malas membaca jadi polisi",
