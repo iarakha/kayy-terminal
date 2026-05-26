@@ -94,6 +94,10 @@ body::after {
   pointer-events: none;
 }
 
+.mt-2 {
+  margin-top: 16px;
+}
+
 /* Base App Layout Container */
 #app,
 .app-container {
@@ -120,6 +124,7 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding-top: 20px;
 }
 
 .profile-desc {
@@ -236,6 +241,7 @@ th {
   letter-spacing: -0.02em;
   font-weight: bold;
   user-select: none;
+  margin-top: -20px !important;
 }
 
 /* =====================================================================
@@ -417,6 +423,32 @@ img.image-real {
 .badge-archived {
   color: var(--dim);
   font-weight: 400;
+}
+
+.question-desc {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.blink {
+  background-color: var(--fg);
+  border-radius: 50%;
+  width: 5px;
+  height: 12px;
+  animation: blink 0.5s infinite;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 /* =====================================================================
