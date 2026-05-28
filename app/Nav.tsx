@@ -7,8 +7,8 @@ import { usePathname, useRouter } from "next/navigation";
 const navItems = [
   { path: "/", label: "01._HOME" },
   { path: "/about", label: "02._ABOUT" },
-  { path: "/hoby", label: "03._HOBBY" },
-  { path: "/experience", label: "04._EXPERIENCE" },
+  { path: "/experience", label: "03._EXPERIENCE" },
+  { path: "/hobby", label: "04._HOBBY" },
 ];
 
 export default function Nav() {
