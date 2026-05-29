@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+
 import Read from "./components/read";
 import { HOBBY } from "./constants";
 import Coding from "./components/coding";
@@ -10,10 +11,11 @@ import Photograph from "./components/photograph";
 import Sport from "./components/sport";
 import Travel from "./components/travel";
 
-export default function Hoby() {
+function HobyContent() {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [selectedHobby, setSelectedHobby] = useState<string | null>(null);
   const router = useRouter();
+
   const searchParams = useSearchParams();
   const hobby = searchParams.get("target");
 
@@ -134,5 +136,13 @@ export default function Hoby() {
       {selectedHobby === "/coding-project" && <Coding onBack={onHandleBack} />}
       {selectedHobby === "/travel-note" && <Travel onBack={onHandleBack} />}
     </main>
+  );
+}
+
+export default function Hoby() {
+  return (
+    <Suspense fallback={<div className="content-wrapper">Loading...</div>}>
+      <HobyContent />
+    </Suspense>
   );
 }
