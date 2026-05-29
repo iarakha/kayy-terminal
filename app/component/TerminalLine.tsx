@@ -1,23 +1,48 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const TerminalLine = () => {
   const [command, setCommand] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
+  const [error, setError] = useState<string>("");
+
+  const router = useRouter();
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      // Handle command execution
-      console.log("Enter key pressed", e.currentTarget.value);
       const value = e.currentTarget.value;
 
       if (value.trim() === "help") {
         setCommand(true);
       } else if (value.trim() === "clear") {
         setCommand(false);
+      } else if (value.trim().startsWith("home")) {
+        router.push("/");
+      } else if (value.trim().startsWith("about")) {
+        router.push("/about");
+      } else if (value.trim().startsWith("hobby")) {
+        router.push("/hobby");
+      } else if (value.trim().startsWith("experience")) {
+        router.push("/experience");
+      } else if (value.trim().startsWith("book")) {
+        router.push("/hobby?target=read-a-book");
+      } else if (value.trim().startsWith("sport")) {
+        router.push("/hobby?target=sport-activity");
+      } else if (value.trim().startsWith("photo")) {
+        router.push("/hobby?target=photograph");
+      } else if (value.trim().startsWith("code")) {
+        router.push("/hobby?target=coding-project");
+      } else if (value.trim().startsWith("travel")) {
+        router.push("/hobby?target=travel-note");
+      } else {
+        setInputValue("");
+        setError("command not found: ss -- type 'help' for commands");
+        return;
       }
 
+      setError("");
       setInputValue("");
     }
   };
@@ -50,6 +75,7 @@ const TerminalLine = () => {
           ))}
         </div>
       )}
+      {error && <div className="terminal-output">{error}</div>}
     </div>
   );
 };
