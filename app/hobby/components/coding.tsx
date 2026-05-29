@@ -8,7 +8,7 @@ export default function Coding({ onBack }: { onBack: () => void }) {
       <HeadersHobby name="CODING_PROJECT.my" onBack={onBack} />
       <div className="content-items py-2">
         <div className="text-dim border-b"> // content</div>
-        <div className="my-2 w-70">
+        <div className="content-description">
           Everyone can make apps, but not everyone can code.
           <br />
           Ai can help us make apps, but it can&apos;t replace the creativity and

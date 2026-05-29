@@ -581,6 +581,11 @@ img.image-real {
   gap: 2rem;
 }
 
+.content-description {
+  margin: 16px 0;
+  width: 70%;
+}
+
 .content-interface {
   display: flex;
   flex-direction: row;
@@ -638,6 +643,10 @@ li::marker {
     flex-direction: column;
     row-gap: 8px;
     gap: 0;
+  }
+
+  .content-description {
+    width: 100%;
   }
 }
 

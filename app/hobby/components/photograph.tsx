@@ -13,7 +13,7 @@ export default function Photograph({ onBack }: { onBack: () => void }) {
       <div className="content-items py-2">
         <div className="text-dim border-b"> // content</div>
 
-        <div className="my-2 w-70">
+        <div className="content-description">
           Cause a picture is all that I have <br />
           To remind me that you&apos;re never comin&apos; back
           <br />

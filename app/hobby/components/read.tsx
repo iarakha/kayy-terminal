@@ -8,7 +8,7 @@ export default function Read({ onBack }: { onBack: () => void }) {
       <HeadersHobby name="READ_A_BOOK.pdf" onBack={onBack} />
       <div className="content-items py-2">
         <div className="text-dim border-b"> // content</div>
-        <div className="my-2 w-70">
+        <div className="content-description">
           Tidakkah Anda ingin menemukan makna{" "}
           <span className="text-accent">HIDUP</span> selagi Anda hidup? Itulah
           kebahagiaan yang sesungguhnya.

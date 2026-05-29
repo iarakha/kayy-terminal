@@ -8,7 +8,7 @@ export default function Sport({ onBack }: { onBack: () => void }) {
       <HeadersHobby name="SPORT_ACTIVITY.log" onBack={onBack} />
       <div className="content-items py-2">
         <div className="text-dim border-b"> // content</div>
-        <div className="my-2 w-70">
+        <div className="content-description">
           Dalam tubuh yang sehat, terdapat jiwa yang kuat.
           <br />
           I don&apos;t want to be a fat uncle.

@@ -8,7 +8,7 @@ export default function Travel({ onBack }: { onBack: () => void }) {
       <HeadersHobby name="TRAVEL_NOTE.loc" onBack={onBack} />
       <div className="content-items py-2">
         <div className="text-dim border-b"> // content</div>
-        <div className="my-2 w-70">
+        <div className="content-description">
           Pergi yang jauh, jangan lupa pulang.
           <br />
           Tuhan menciptakan dunia ini dengan indah.
